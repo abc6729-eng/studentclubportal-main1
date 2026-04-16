@@ -1,0 +1,53 @@
+[
+  {
+    "id": "1",
+    "memberName": "Amir Clinton",
+    "email": "amir@example.com",
+    "yearLevel": "Sophomore",
+    "organization": "PSU E-Sports Club",
+    "clubRole": "Member",
+    "phone": "123-456-7890",
+    "status": "pending",
+    "submittedAt": "2026-04-12"
+  },
+  {
+    "id": "2",
+    "memberName": "John Doe",
+    "email": "john@example.com",
+    "yearLevel": "Freshman",
+    "organization": "PSU E-Sports Club",
+    "clubRole": "Player",
+    "status": "approved",
+    "submittedAt": "2026-04-10"
+  },
+  {
+    "id": "1776050787855",
+    "memberName": "Jason Derulo",
+    "email": "jd@idk.com",
+    "yearLevel": "Senior",
+    "organization": "Other",
+    "phone": "(123)-456-7890",
+    "studentId": "jk ",
+    "major": "Music",
+    "clubRole": "Volunteer",
+    "interests": "League",
+    "availability": "weekends",
+    "status": "declined",
+    "submittedAt": "2026-04-13T03:26:27.773Z"
+  },
+  {
+    "id": "1776050832598",
+    "memberName": "Jason Derulo",
+    "email": "jd@idk.com",
+    "yearLevel": "Senior",
+    "organization": "Other",
+    "phone": "(123)-456-7890",
+    "studentId": "jk ",
+    "major": "Music",
+    "clubRole": "Volunteer",
+    "interests": "League",
+    "availability": "weekends",
+    "status": "pending",
+    "submittedAt": "2026-04-13T03:27:12.590Z"
+  }
+]

@@ -1,0 +1,185 @@
+let events = [
+    {
+        eventId: "E101",
+        eventName: "10th Annual Rocket Rumble",
+        eventDescription: "A thrilling Rocket League tournament for all skill levels.",
+        eventType: "Tournament",
+        duration: "4 hours",
+        hostName: "John Doe",
+        datetime: "2026-03-25T14:00",
+        location: "Westgate Building",
+        entryFee: "Free",
+        additionalInfo: "Bring your own controller!"
+    }
+];
+
+function showMessage(message, type) {
+    $("#messageBox").html(`
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `);
+}
+
+function formatDateTime(dateTimeString) {
+    if (!dateTimeString) return "N/A";
+    const date = new Date(dateTimeString);
+    return date.toLocaleString();
+}
+
+function renderEvents(eventList = events) {
+    let output = "";
+
+    $.each(eventList, function(index, event) {
+        output += `
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">${event.eventName}</h5>
+                        <p class="card-text">${event.eventDescription}</p>
+                        <h6><strong>Type:</strong> ${event.eventType}</h6>
+                        <h6><strong>Hosted by:</strong> ${event.hostName}</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>ID:</strong> ${event.eventId}</li>
+                        <li class="list-group-item"><strong>Date & Time:</strong> ${formatDateTime(event.datetime)}</li>
+                        <li class="list-group-item"><strong>Duration:</strong> ${event.duration}</li>
+                        <li class="list-group-item"><strong>Location:</strong> ${event.location}</li>
+                        <li class="list-group-item"><strong>Entry Fee:</strong> ${event.entryFee}</li>
+                        <li class="list-group-item"><strong>Additional Info:</strong> ${event.additionalInfo}</li>
+                    </ul>
+                    <div class="card-body d-flex justify-content-between">
+                        <button class="btn btn-primary edit-btn" data-index="${index}">Edit</button>
+                        <button class="btn btn-danger delete-btn" data-index="${index}">Delete</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    $("#eventContainer").html(output);
+    $("#jsonOutput").text(JSON.stringify(events, null, 2));
+}
+
+function clearForm() {
+    $("#eventForm")[0].reset();
+    $("#editIndex").val("-1");
+}
+
+function validateForm() {
+    const requiredFields = [
+        "#eventId",
+        "#eventName",
+        "#eventDescription",
+        "#eventTypeSelect",
+        "#durationInput",
+        "#memberInput",
+        "#datetime",
+        "#locationInput",
+        "#entryFeeInput"
+    ];
+
+    let isValid = true;
+
+    requiredFields.forEach(function(field) {
+        if ($(field).val().trim() === "") {
+            $(field).addClass("is-invalid");
+            isValid = false;
+        } else {
+            $(field).removeClass("is-invalid").addClass("is-valid");
+        }
+    });
+
+    return isValid;
+}
+
+$(document).ready(function() {
+    renderEvents();
+
+    $("#eventForm").on("submit", function(e) {
+        e.preventDefault();
+
+        $("input, select").removeClass("is-invalid is-valid");
+
+        if (!validateForm()) {
+            showMessage("Please complete all required fields.", "danger");
+            return;
+        }
+
+        const eventData = {
+            eventId: $("#eventId").val().trim(),
+            eventName: $("#eventName").val().trim(),
+            eventDescription: $("#eventDescription").val().trim(),
+            eventType: $("#eventTypeSelect").val().trim(),
+            duration: $("#durationInput").val().trim(),
+            hostName: $("#memberInput").val().trim(),
+            datetime: $("#datetime").val(),
+            location: $("#locationInput").val().trim(),
+            entryFee: $("#entryFeeInput").val().trim(),
+            additionalInfo: $("#addInfoInput").val().trim()
+        };
+
+        const editIndex = $("#editIndex").val();
+
+        if (editIndex === "-1") {
+            events.push(eventData);
+            showMessage("Event added successfully.", "success");
+        } else {
+            events[editIndex] = eventData;
+            showMessage("Event updated successfully.", "success");
+        }
+
+        renderEvents();
+        clearForm();
+    });
+
+    $(document).on("click", ".edit-btn", function() {
+        const index = $(this).data("index");
+        const event = events[index];
+
+        $("#eventId").val(event.eventId);
+        $("#eventName").val(event.eventName);
+        $("#eventDescription").val(event.eventDescription);
+        $("#eventTypeSelect").val(event.eventType);
+        $("#durationInput").val(event.duration);
+        $("#memberInput").val(event.hostName);
+        $("#datetime").val(event.datetime);
+        $("#locationInput").val(event.location);
+        $("#entryFeeInput").val(event.entryFee);
+        $("#addInfoInput").val(event.additionalInfo);
+        $("#editIndex").val(index);
+
+        showMessage("Event loaded for editing.", "info");
+    });
+
+    $(document).on("click", ".delete-btn", function() {
+        const index = $(this).data("index");
+        events.splice(index, 1);
+        renderEvents();
+        showMessage("Event deleted successfully.", "warning");
+    });
+
+    $("#searchButton").on("click", function() {
+        const searchText = $("#searchInput").val().toLowerCase();
+
+        const filteredEvents = events.filter(function(event) {
+            return (
+                event.eventName.toLowerCase().includes(searchText) ||
+                event.eventType.toLowerCase().includes(searchText)
+            );
+        });
+
+        renderEvents(filteredEvents);
+    });
+
+    $("#clearButton").on("click", function() {
+        $("#searchInput").val("");
+        renderEvents();
+    });
+
+    $("#clearFormBtn").on("click", function() {
+        clearForm();
+        $("input, select").removeClass("is-invalid is-valid");
+    });
+});
