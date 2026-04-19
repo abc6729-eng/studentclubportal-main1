@@ -5,7 +5,6 @@ const memberForm = document.getElementById("memberForm");
 const messageBox = document.getElementById("messageBox");
 const memberTableBody = document.getElementById("memberTableBody");
 const jsonOutput = document.getElementById("jsonOutput");
-const clearBtn = document.getElementById("clearBtn");
 
 // All form field IDs
 const fieldIds = [
@@ -195,10 +194,6 @@ memberForm.addEventListener("submit", async function (e) {
 
   // Send to server
   await sendToServer(memberData);
-});
-
-clearBtn.addEventListener("click", function () {
-  resetForm();
 });
 
 // Initial render

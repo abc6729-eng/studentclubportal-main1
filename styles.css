@@ -64,6 +64,13 @@ body{
   border-radius:6px;
 }
 
+.form-label,
+.form-control label,
+label.form-label {
+  color: #0f1720 !important;
+  font-weight: 700;
+}
+
 .form-control:focus{
   border-color:var(--psu-blue);
   box-shadow:0 0 5px rgba(45,125,187,.5);
@@ -170,3 +177,68 @@ section p {
   }
 
 }
+
+.registration-panel {
+  background: rgba(15, 23, 32, 0.95);
+  color: #e8f2fb;
+}
+
+.registration-panel .card,
+.registration-panel .table,
+.registration-panel .form-control,
+.registration-panel .form-select,
+.registration-panel textarea {
+  background: transparent;
+}
+
+.registration-panel .form-label {
+  color: #e8f2fb !important;
+  font-weight: 700;
+}
+
+.registration-panel .form-label.required::after {
+  content: ' *';
+  color: #f87171;
+}
+
+.registration-panel .form-control,
+.registration-panel .form-select,
+.registration-panel textarea {
+  border-color: rgba(232, 242, 251, 0.15);
+}
+
+.registration-panel .form-control:focus,
+.registration-panel .form-select:focus,
+.registration-panel textarea:focus {
+  border-color: var(--psu-blue);
+  box-shadow: 0 0 10px rgba(45, 125, 187, 0.3);
+}
+
+.registration-panel .table {
+  border-color: rgba(232, 242, 251, 0.15);
+}
+
+.registration-panel .table-dark {
+  color: #e8f2fb;
+}
+
+.registration-panel .table-dark tbody tr {
+  border-color: rgba(255,255,255,0.08);
+}
+
+.registration-panel .table-dark th,
+.registration-panel .table-dark td {
+  border-color: rgba(255,255,255,0.08);
+}
+
+.registration-panel .table-dark thead th {
+  color: #e8f2fb;
+  background-color: rgba(38, 70, 92, 0.9);
+}
+
+.registration-panel pre {
+  background: rgba(12, 17, 24, 0.95) !important;
+  color: #e8f2fb !important;
+  border: 1px solid rgba(232, 242, 251, 0.12);
+}
+
